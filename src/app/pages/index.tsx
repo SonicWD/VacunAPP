@@ -1,22 +1,64 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { CalendarIcon, ShieldCheckIcon, UserIcon } from 'lucide-react'
 
-export default function Home() {
+export default function LandingPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    // Aquí iría la lógica de autenticación
+    console.log('Iniciando sesión con:', email)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
       <header className="container mx-auto p-6">
         <nav className="flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600">VacunApp</h1>
-          <div className="space-x-2">
-            <Button asChild variant="outline" size="sm">
-              <Link href="/login">Iniciar Sesión</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link href="/register">Registrarse</Link>
-            </Button>
-          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Iniciar Sesión</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Iniciar Sesión</DialogTitle>
+                <DialogDescription>
+                  Ingrese sus credenciales para acceder a su cuenta.
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Correo Electrónico</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Contraseña</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full">Iniciar Sesión</Button>
+              </form>
+            </DialogContent>
+          </Dialog>
         </nav>
       </header>
 
@@ -25,7 +67,7 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Bienvenido a VacunApp</h2>
           <p className="text-xl text-gray-600 mb-8">La plataforma integral para el control y seguimiento de vacunación</p>
           <Button size="lg" asChild>
-            <Link href="/register">Regístrate Ahora</Link>
+            <Link href="/signup">Regístrate Ahora</Link>
           </Button>
         </section>
 
@@ -72,23 +114,6 @@ export default function Home() {
         </section>
 
         <section className="text-center">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Acceso Rápido</h3>
-          <div className="flex justify-center space-x-4">
-            <Button asChild variant="outline">
-              <Link href="/patient-dashboard">Panel de Paciente</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="/doctor-dashboard">Panel de Médico</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="/admin-dashboard">Panel de Administrador</Link>
-            </Button>
-          </div>
-        </section>
-        <p>
-          .
-        </p>
-        <section className="text-center">
           <h3 className="text-2xl font-semibold text-gray-800 mb-4">¿Por qué elegir VacunApp?</h3>
           <ul className="text-left max-w-md mx-auto space-y-2">
             <li className="flex items-center">
@@ -104,7 +129,6 @@ export default function Home() {
               Seguimiento personalizado de vacunación
             </li>
           </ul>
-       
         </section>
       </main>
 
